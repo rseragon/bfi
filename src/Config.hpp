@@ -24,4 +24,5 @@ namespace bfi {
 		static Config parse(int argc, char **argv);
 	};
 
+	void print_help(char* exec_name);
 } // namespace bfi

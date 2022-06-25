@@ -13,3 +13,7 @@ add_executable(${PROJECT_NAME} src/main.cpp
 							   src/config.cpp 
 							   src/interpreter.cpp
 							   src/parser.cpp)
+
+
+install(TARGETS bfi
+        DESTINATION bin)
