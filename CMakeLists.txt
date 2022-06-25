@@ -9,4 +9,7 @@ if (ASCII_TERMINAL)
 endif()
 
 
-add_executable(${PROJECT_NAME} src/main.cpp src/config.cpp src/interpreter.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp 
+							   src/config.cpp 
+							   src/interpreter.cpp
+							   src/parser.cpp)
