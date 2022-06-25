@@ -4,5 +4,5 @@
 #include "Config.hpp"
 
 namespace bfi {
-	Token parse(Config& config);
+	Token parse(std::basic_string<char>::iterator& iter);
 }

@@ -1,3 +1,4 @@
+#include <string>
 #include <vector>
 #include <stack>
 #include <utility>
@@ -19,33 +20,37 @@ namespace bfi {
 
 		size_t index = 0;
 
-		Token tok;
+		auto array_iter = array.begin();
 
-		auto iter = array.begin();
+		std::string file_str = bfi::read_to_string(config.input_stream);
+
+		auto str_iter = file_str.begin();
 
 		int input; // This will be used to take input
 
-		while((tok = bfi::parse(config)) != Token::END) {
+		while(str_iter != file_str.end()) {
+
+			Token tok = bfi::parse(str_iter);
 
 			switch(tok) {
 				case Token::PLUS:
-					(*iter)++;
+					(*array_iter)++;
 					break;
 				case Token::MINUS:
-					(*iter)--;
+					(*array_iter)--;
 					break;
 				case Token::MOVE_RIGHT:
-					iter++;
+					array_iter++;
 					break;
 				case Token::MOVE_LEFT:
-					iter--;
+					array_iter--;
 					break;
 				case Token::OUTPUT:
-					std::cout << (char) *iter;
+					std::cout << (char) *array_iter;
 					break;
 				case Token::INPUT: 
 					std::cin >> input;
-					*iter = input;
+					*array_iter = input;
 					break;
 				case Token::LOOP_START:
 					stack.push(index);
@@ -56,30 +61,46 @@ namespace bfi {
 						ERR("Invalid character ']' found at index: %zu", index);
 						exit(__LINE__);
 					}
-					if(*iter == 0) {
-						iter++;
+
+					if(*array_iter == 0) {
 						stack.pop();
 						break;
 					}
 					else {
-						int relative_pos = index - stack.top();
-						iter -= relative_pos + 1;
-						index = stack.top() + 1; 
+						str_iter = file_str.begin() + stack.top();
+						index = stack.top();
 					}
 
 				}
 				case Token::OTHER:
 					break;
+				case Token::END:
+					break;
 			}
 
 			index++;
+			str_iter++;
 		}
+
+		// cleanup :D
+		config.input_stream.close();
 
 		if(stack.size() != 0) {
 			ERR("EOF reached at index %zu: Expected end of loop started at %zu", index, stack.top());
 			exit(__LINE__);
 		}
+	}
 
+	std::string read_to_string(std::fstream& stream) {
+		std::string str;
+
+		while(!stream.eof()) {
+			std::string curr;
+			stream >> curr;
+			str += std::move(curr);
+		}
+
+		return str;
 	}
 
 }

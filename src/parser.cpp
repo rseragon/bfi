@@ -1,13 +1,9 @@
 #include "Parser.hpp"
 
 namespace bfi {
-	Token parse(Config& config) {
+	Token parse(std::basic_string<char>::iterator& iter) {
 
-		if(config.input_stream.eof())
-			return Token::END;
-
-		char c;
-		config.input_stream >> c;
+		char c = *iter;
 
 		switch(c) {
 			case '+':
@@ -33,6 +29,7 @@ namespace bfi {
 
 			case ']':
 				return Token::LOOP_END;
+
 		}
 
 		return Token::OTHER;
