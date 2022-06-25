@@ -19,3 +19,4 @@
 	#define ERR(MSG, ...) \
 		fprintf(stdout, "[ERROR] " MSG "\n", ##__VA_ARGS__);
 #endif
+

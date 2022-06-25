@@ -16,7 +16,6 @@ namespace bfi {
 
 		// TODO: -a -s, -(stdin)
 		char* file_to_read = argv[1];
-		INFO("Input file: %s", file_to_read);
 
 		Config conf = Config(file_to_read);
 

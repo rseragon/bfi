@@ -5,6 +5,9 @@ namespace bfi {
 
 		char c = *iter;
 
+		if(c == '\0')
+			return Token::END;
+
 		switch(c) {
 			case '+':
 				return Token::PLUS;

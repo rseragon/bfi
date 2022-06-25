@@ -1,4 +1,5 @@
 #include <string>
+#include <cstdio>
 #include <vector>
 #include <stack>
 #include <utility>
@@ -18,6 +19,9 @@ namespace bfi {
 		std::vector<int> array(config.array_size, 0);
 		std::stack<size_t> stack;
 
+		// Just so that the input doesn't fuck up
+		std::ios_base::sync_with_stdio(true);
+
 		size_t index = 0;
 
 		auto array_iter = array.begin();
@@ -26,7 +30,7 @@ namespace bfi {
 
 		auto str_iter = file_str.begin();
 
-		int input; // This will be used to take input
+		char input; // This will be used to take input
 
 		while(str_iter != file_str.end()) {
 
@@ -49,7 +53,18 @@ namespace bfi {
 					std::cout << (char) *array_iter;
 					break;
 				case Token::INPUT: 
-					std::cin >> input;
+					// The most awkward part of programming 
+					if(std::cin.peek() == std::char_traits<char>::eof()) {
+						break;
+					}
+					else if(std::cin.peek() == '\n') {
+						input = '\n';
+						std::cin.get();
+					}
+					else {
+						std::cin >> input; 
+					}
+					// INFO("Input char: %c", input);
 					*array_iter = input;
 					break;
 				case Token::LOOP_START:
@@ -84,6 +99,13 @@ namespace bfi {
 
 		// cleanup :D
 		config.input_stream.close();
+
+		/*
+		for(int i = 0; i < index; i++) {
+			std::cout << array[i] << " ";
+		}
+		std::cout << std::endl;
+		*/
 
 		if(stack.size() != 0) {
 			ERR("EOF reached at index %zu: Expected end of loop started at %zu", index, stack.top());
