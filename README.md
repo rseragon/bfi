@@ -20,7 +20,7 @@ cmake -Dfoo=bar /path/to/bfi/build
 ### Few cmake options
 ##### Colored output
 + ASCII_TERMINAL=on 
-##### Release build
+##### Build type
 + CMAKE_BUILD_TYPE=Debug
 + CMAKE_BUILD_TYPE=Release
 
