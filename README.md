@@ -35,3 +35,15 @@ Eg:
 sudo cmake --install /path/to/bfi/build
 ```
 
+
+## Usage
+```console
+❯ bfi -h
+Usage:
+bfi <file> [-a,-s]
+
+        <file>          File to read from
+        -a [NUMBER]     sets the max array size
+        -s [NUMBER]     sets the max stack size
+        -h              prints this help message
+```
